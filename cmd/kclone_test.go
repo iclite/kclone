@@ -1,14 +1,11 @@
 package main
 
 import (
-	"flag"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
 )
-
-var kcloneTest = flag.Bool("kclone", false, "run the kclone tests")
 
 var defaultURL = "https://github.com/git-fixtures/basic.git"
 
@@ -20,10 +17,8 @@ var targetFolder = []string{}
 
 func TestKclone(t *testing.T) {
 
-	flag.Parse()
-
-	getTargetFolder("git-fixtures/basic")
-	defer deleteTargetFolder()
+	getTargetFolder("github.com/git-fixtures/basic")
+	deleteTargetFolder()
 
 	t.Run("kclone", func(t *testing.T) {
 		arguments := append([]string{"run", "."}, args["clone"])
@@ -51,6 +46,7 @@ func getTargetFolder(dir string) string {
 
 func deleteTargetFolder() {
 	for _, folder := range targetFolder {
+		folder := folder
 		err := os.RemoveAll(folder)
 		CheckIfError(err)
 	}
