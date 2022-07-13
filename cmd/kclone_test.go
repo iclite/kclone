@@ -47,7 +47,9 @@ func getTargetFolder(dir string) string {
 func deleteTargetFolder() {
 	for _, folder := range targetFolder {
 		folder := folder
-		err := os.RemoveAll(folder)
-		CheckIfError(err)
+		if _, err := os.Stat(folder); !os.IsNotExist(err) {
+			err := os.RemoveAll(folder)
+			CheckIfError(err)
+		}
 	}
 }
