@@ -63,7 +63,7 @@ format-check:
 
 .PHONY: test release config
 test: $(SOURCES)
-	cd cmd && go test $(ARGS) ./... -coverprofile ../cover.out
+	cd cmd && rm -rf gitworks && go test $(ARGS) ./... -coverprofile ../cover.out && rm -rf gitworks
 
 test-all: format-check coverage-check lint
 
