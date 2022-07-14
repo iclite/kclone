@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
-
-	"github.com/go-git/go-git/v5"
 )
 
 func Info(format string, args ...interface{}) {
@@ -37,8 +36,8 @@ func CheckIfError(err error) {
 func main() {
 	CheckArgs("<url>")
 	url := os.Args[1]
-	userPath, errUserPath := os.UserHomeDir()
-	CheckIfError(errUserPath)
+	userPath, err := os.UserHomeDir()
+	CheckIfError(err)
 
 	reg := regexp.MustCompile(`(http(s)?:\/\/|git@)([0-9a-zA-Z\.]+)(\/|:)(.*)(.git)`)
 	if reg == nil {
@@ -50,10 +49,15 @@ func main() {
 
 	Info("git clone %s %s --recursive", url, clonePath)
 
-	_, errClone := git.PlainClone(clonePath, false, &git.CloneOptions{
-		URL:      url,
-		Progress: os.Stdout,
-	})
+	cmd := exec.Command("git", "clone", url, clonePath, "--recursive")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err = cmd.Run()
+	CheckIfError(err)
 
-	CheckIfError(errClone)
+	Info("\nClone complete!")
+	Info("\nOpen in explorer:")
+	Info("\n    explorer %s", clonePath)
+	Info("\nOpen in VS Code:")
+	Info("\n    code %s\n", clonePath)
 }
