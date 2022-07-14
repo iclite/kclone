@@ -63,8 +63,21 @@ func TestCheckIfError(t *testing.T) {
 
 func TestGetArgs(t *testing.T) {
 	Info("======== TestGetArgs ========")
+
+	oldOsExit := osExit
+	var exitNumber int
+	defer func() { osExit = oldOsExit }()
+	exitCode := func(code int) {
+		exitNumber = code
+	}
+	osExit = exitCode
+
 	os.Args = []string{""}
 	GetArgs()
+
+	if exp := 1; exitNumber != exp {
+		t.Errorf("Expected exit code: %d, got: %d", exp, exitNumber)
+	}
 
 	os.Args = append(os.Args, "-t", defaultURL)
 	test, url := GetArgs()

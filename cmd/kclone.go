@@ -27,14 +27,16 @@ func CheckIfError(err error) {
 
 func GetArgs() (bool, string) {
 	flag.Parse()
+	var url string
 
 	if len(flag.Args()) < 1 {
 		Info("Usage: kclone <git url>")
-		return false, ""
+		osExit(1)
 	} else {
-		url := flag.Args()[0]
-		return *test, url
+		url = flag.Args()[0]
 	}
+
+	return *test, url
 }
 
 func GetUserPath(test bool) string {
