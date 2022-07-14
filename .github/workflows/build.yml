@@ -20,7 +20,7 @@ jobs:
           go-version: ${{ matrix.go }}
       - name: Build
         run: |
-          make build/kclone
+          make build/kclone.exe
           make OS=windows ARCH=amd64 build/kclone.exe
           make clean
           make OS=darwin  ARCH=amd64 build/kclone_darwin

@@ -8,15 +8,14 @@ GOFORMATTER ?= gofmt
 BIN_NAME := kclone
 PROG := build/$(BIN_NAME)
 ifneq (,$(findstring indows,$(OS)))
-    PROG=build/$(BIN_NAME).exe
-    OS=windows
+	PROG=build/$(BIN_NAME).exe
+	OS=windows
 else ifneq (,$(findstring arwin,$(OS)))
 	PROG=build/$(BIN_NAME)_darwin
-    OS=darwin
-else
-    # Default to Linux
+	OS=darwin
+else ifneq (,$(findstring inux,$(OS)))
 	PROG=build/$(BIN_NAME)_linux
-    OS=linux
+	OS=linux
 endif
 
 SOURCES := $(wildcard cmd/*.go) $(wildcard cmd/*/*.go)
