@@ -21,7 +21,7 @@ func TestKclone(t *testing.T) {
 	deleteTargetFolder()
 
 	t.Run("kclone", func(t *testing.T) {
-		arguments := append([]string{"run", "."}, args["clone"])
+		arguments := append([]string{"run", "."}, "-t", args["clone"])
 		cmd := exec.Command("go", arguments...)
 
 		cmd.Stdout = os.Stdout
@@ -34,10 +34,7 @@ func TestKclone(t *testing.T) {
 }
 
 func getTargetFolder(dir string) string {
-	userPath, errUserPath := os.UserHomeDir()
-	CheckIfError(errUserPath)
-
-	path := userPath
+	path := "."
 	path = filepath.Join(path, "gitworks", dir)
 
 	targetFolder = append(targetFolder, path)

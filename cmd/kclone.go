@@ -1,27 +1,16 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"strings"
 )
 
 func Info(format string, args ...interface{}) {
 	fmt.Printf("\x1b[34;1m%s\x1b[0m\n", fmt.Sprintf(format, args...))
-}
-
-func Warning(format string, args ...interface{}) {
-	fmt.Printf("\x1b[36;1m%s\x1b[0m\n", fmt.Sprintf(format, args...))
-}
-
-func CheckArgs(arg ...string) {
-	if len(os.Args) < len(arg)+1 {
-		Warning("Usage: %s %s", os.Args[0], strings.Join(arg, " "))
-		os.Exit(1)
-	}
 }
 
 func CheckIfError(err error) {
@@ -34,10 +23,21 @@ func CheckIfError(err error) {
 }
 
 func main() {
-	CheckArgs("<url>")
-	url := os.Args[1]
+	test := flag.Bool("t", false, "Test mode.")
+	flag.Parse()
+	fmt.Println("-t:", *test)
+
+	if len(flag.Args()) < 1 {
+		fmt.Println("Usage: kclone <git url>")
+	}
+
+	url := flag.Args()[0]
 	userPath, err := os.UserHomeDir()
 	CheckIfError(err)
+
+	if *test {
+		userPath = "."
+	}
 
 	reg := regexp.MustCompile(`(http(s)?:\/\/|git@)([0-9a-zA-Z\.]+)(\/|:)(.*)(.git)`)
 	if reg == nil {
