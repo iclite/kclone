@@ -23,4 +23,7 @@ jobs:
           make build/kclone
           make OS=windows ARCH=amd64 build/kclone.exe
           make clean
-          make OS=darwin  ARCH=amd64 build/kclone
+          make OS=darwin  ARCH=amd64 build/kclone_darwin
+          make clean
+          make OS=linux  ARCH=amd64 build/kclone_linux
+
