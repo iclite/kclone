@@ -10,10 +10,12 @@ PROG := build/$(BIN_NAME)
 ifneq (,$(findstring indows,$(OS)))
     PROG=build/$(BIN_NAME).exe
     OS=windows
-else ifneq (,$(findstring Darwin,$(OS)))
+else ifneq (,$(findstring arwin,$(OS)))
+	PROG=build/$(BIN_NAME)_darwin
     OS=darwin
 else
     # Default to Linux
+	PROG=build/$(BIN_NAME)_linux
     OS=linux
 endif
 
@@ -27,7 +29,8 @@ all:
 	@echo
 	@echo Build for different OS's and ARCH's by defining these variables. Ex:
 	@echo $$ make OS=windows ARCH=amd64 build/$(BIN_NAME).exe
-	@echo $$ make OS=darwin  ARCH=amd64 build/$(BIN_NAME)
+	@echo $$ make OS=darwin  ARCH=amd64 build/$(BIN_NAME)_darwin
+	@echo $$ make OS=linux   ARCH=amd64 build/$(BIN_NAME)_linux
 	@echo
 	@echo Run tests
 	@echo $$ make test ARGS="<test args>"
