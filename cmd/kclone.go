@@ -60,7 +60,7 @@ func GetClonePath(url string, userPath string) string {
 	reg := regexp.MustCompile(`(http(s)?:\/\/|git@)([0-9a-zA-Z\.]+)(\/|:)(.*)(.git)`)
 
 	res := reg.FindAllStringSubmatch(url, -1)
-	clonePath := filepath.Join(userPath + "\\gitworks\\" + res[0][3] + "\\" + res[0][5])
+	clonePath := filepath.Join(userPath, "gitworks", res[0][3], res[0][5])
 
 	return clonePath
 }

@@ -17,7 +17,7 @@ var args = map[string]string{
 var targetFolder = []string{}
 
 func TestKclone(t *testing.T) {
-
+	Info("======== TestKclone ========")
 	getTargetFolder("github.com/git-fixtures/basic")
 	if _, err := os.Stat(targetFolder[0]); !os.IsNotExist(err) {
 		err := os.RemoveAll(targetFolder[0])
@@ -38,10 +38,11 @@ func TestKclone(t *testing.T) {
 }
 
 func TestInfo(t *testing.T) {
-	Info("Info Test")
+	Info("======== TestInfo ========")
 }
 
 func TestCheckIfError(t *testing.T) {
+	Info("======== TestCheckIfError ========")
 	CheckIfError(nil)
 
 	oldOsExit := osExit
@@ -61,6 +62,7 @@ func TestCheckIfError(t *testing.T) {
 }
 
 func TestGetArgs(t *testing.T) {
+	Info("======== TestGetArgs ========")
 	os.Args = []string{""}
 	GetArgs()
 
@@ -77,6 +79,7 @@ func TestGetArgs(t *testing.T) {
 }
 
 func TestGetUserPath(t *testing.T) {
+	Info("======== TestGetUserPath ========")
 	userPath, err := os.UserHomeDir()
 	if err != nil {
 		t.Fatalf("process ran with err %v, want exit status 1", err)
@@ -96,14 +99,16 @@ func TestGetUserPath(t *testing.T) {
 }
 
 func TestGetClonePath(t *testing.T) {
+	Info("======== TestGetClonePath ========")
 	path := GetClonePath(defaultURL, ".")
-	clonePath := filepath.Join(".", "gitworks", "github.com", "git-fixtures", "basic")
+	clonePath := filepath.Join("gitworks", "github.com", "git-fixtures", "basic")
 	if path != clonePath {
 		t.Fatalf("TestGetClonePath path != clonePath " + path + " " + clonePath)
 	}
 }
 
 func TestClone(t *testing.T) {
+	Info("======== TestClone ========")
 	path := "gitworks/github.com/git-fixtures/basic"
 
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
@@ -115,14 +120,20 @@ func TestClone(t *testing.T) {
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		t.Fatalf("TestGetClonePath path != clonePath")
+	} else if _, err := os.Stat(path); !os.IsNotExist(err) {
+		err := os.RemoveAll(path)
+		CheckIfError(err)
 	}
 }
 
 func TestShowComplete(t *testing.T) {
+	Info("======== ShowComplete ========")
 	ShowComplete("")
 }
 
 func TestRunMain(t *testing.T) {
+	Info("======== TestRunMain ========")
+
 	path := "gitworks/github.com/git-fixtures/basic"
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
 		err := os.RemoveAll(path)
