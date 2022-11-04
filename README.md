@@ -12,6 +12,8 @@ clone to
 ~/gitworks/<domain>/<user/organize>/<project>/
 ```
 
+![kclone](docs/kclone.png)
+
 ## Usage
 
 ```text
@@ -29,3 +31,5 @@ This repository will be cloned to
 ```bash
 ~/gitworks/github.com/go-git/go-git
 ```
+
+![example](docs/example.png)
