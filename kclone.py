@@ -113,7 +113,7 @@ def parse_git_url(url):
     """解析Git URL,返回主机名、用户名和仓库名"""
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.strip('/').split('/')
-    return parsed_url.hostname, path_parts[0], path_parts[1].rstrip('.git')
+    return parsed_url.hostname, path_parts[0], path_parts[1].replace('.git', '')
 
 
 def safe_remove_directory(path):
